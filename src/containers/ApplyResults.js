@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { applyStore } from '../actions';
 
 class ApplyResults extends Component {
   constructor(props) {
@@ -19,6 +21,7 @@ class ApplyResults extends Component {
     const journal=data['container-title'][0];
     const publisher=data.publisher;
     const classification=this.props.classifier.categorize(title);
+    this.props.applyStore(data, classification);
     return (
       <div className='apply-entity' key={url}>
         <a href={url}>{title}</a>
@@ -42,4 +45,8 @@ function mapStateToProps({ applyHits, classifier }) {
 	return { applyHits, classifier };
 }
 
-export default connect(mapStateToProps)(ApplyResults);
+const mapDispatchToProps = (dispatch) => {
+	return bindActionCreators({ applyStore }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ApplyResults);

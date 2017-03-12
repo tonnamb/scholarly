@@ -5,6 +5,7 @@ import numHits from './num_hits';
 import query from './query';
 import mode from './mode';
 import applyHits from './apply_hits';
+import applyStore from './apply_store';
 
 const Reducer = combineReducers({
   classifier,
@@ -12,7 +13,8 @@ const Reducer = combineReducers({
   numHits,
   query,
   mode,
-  applyHits
+  applyHits,
+  applyStore
 });
 
 export default Reducer;

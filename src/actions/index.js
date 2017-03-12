@@ -34,3 +34,10 @@ export function applyFetch(query) {
 		payload: applyrequest
 	}
 }
+
+export function applyStore(obj, classification) {
+	return {
+		type: types.APPLY_STORE,
+		data: { ...obj, classification }
+	}
+}
