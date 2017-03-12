@@ -1,4 +1,5 @@
 How it works:
+
 1. Search
 2. Categorize some items to train Naive Bayes classifer
 3. Apply the classifier to the other items
@@ -17,6 +18,7 @@ Commands:
 * Run tests: `npm test`
 
 To-do:
+
 1. Write tests
 2. Prevent categories `all` and `cannot classify`
 3. Display entered categories while training
