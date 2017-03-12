@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import SearchBox from './SearchBox';
 import SearchResults from './SearchResults';
 import ApplyButton from './ApplyButton';
+import HowItWorks from '../components/HowItWorks';
 
 class SearchDisplay extends Component {
   render() {
@@ -10,16 +11,21 @@ class SearchDisplay extends Component {
     if (this.props.mode === 'search') {
       searchContainers = (
         <div>
-          <SearchBox />
-			    <SearchResults />
-          <ApplyButton />
+          <div className="col-xs-12 col-md-8 col-md-offset-2">
+            <SearchBox />
+			      <SearchResults />
+            <ApplyButton />
+          </div>
+          <div className="col-xs-12 col-md-2">
+              <HowItWorks />
+          </div>
         </div>
       );
     }
 
     return (
-      <div>
-        {searchContainers}
+      <div className="row">
+          {searchContainers}
       </div>
     );
   }

@@ -11,12 +11,8 @@ class App extends Component {
 						<h3>Scholarly: Enhanced literature search with machine learning</h3>
 					</div>
 				</div>
-				<div className="row">
-					<div className="col-xs-12 col-md-8 col-md-offset-2">
-						<SearchDisplay />
-						<ApplyDisplay />
-					</div>
-				</div>
+				<SearchDisplay />
+				<ApplyDisplay />
 			</div>
 		);
 	}

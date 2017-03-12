@@ -35,7 +35,7 @@ export function applyFetch(query) {
 	}
 }
 
-export function applyStore(obj, classification) {
+export function storeClass(obj, classification) {
 	return {
 		type: types.APPLY_STORE,
 		data: { ...obj, classification }

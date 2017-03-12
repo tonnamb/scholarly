@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { applyStore } from '../actions';
+import { storeClass } from '../actions';
 
 class ApplyResults extends Component {
   constructor(props) {
     super(props);
     this.renderEntity = this.renderEntity.bind(this);
+    this.dispatchStoreClass = this.dispatchStoreClass.bind(this);
   }
 
   parseAuthor(author) {
@@ -21,7 +22,6 @@ class ApplyResults extends Component {
     const journal=data['container-title'][0];
     const publisher=data.publisher;
     const classification=this.props.classifier.categorize(title);
-    this.props.applyStore(data, classification);
     return (
       <div className='apply-entity' key={url}>
         <a href={url}>{title}</a>
@@ -30,6 +30,16 @@ class ApplyResults extends Component {
         <p>Classified as: {classification}</p>
       </div>
     );
+  }
+
+  dispatchStoreClass(data) {
+    const applyTitle=(data.title[0] ? data.title[0] : '__title_not_present__');
+    const applyClassification=this.props.classifier.categorize(applyTitle);
+    this.props.storeClass(data, applyClassification);
+  }
+
+  componentDidUpdate() {
+    this.props.applyHits.map(this.dispatchStoreClass);
   }
 
 	render() {
@@ -46,7 +56,7 @@ function mapStateToProps({ applyHits, classifier }) {
 }
 
 const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators({ applyStore }, dispatch);
+	return bindActionCreators({ storeClass }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplyResults);

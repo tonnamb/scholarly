@@ -2,7 +2,7 @@ import * as types from '../actions/types';
 import Bayes from 'bayes';
 
 const defaultClassifier = Bayes();
-defaultClassifier.learn('', '__unknown__')
+defaultClassifier.learn('', 'not classified')
 
 const classifier = (state = defaultClassifier, action) => {
   switch (action.type) {

@@ -32,7 +32,7 @@ class SearchResults extends Component {
 	render() {
     let numHitsDisplay;
     if (this.props.numHits) {
-      numHitsDisplay = <p className='text-right'>{this.props.numHits} results</p>;
+      numHitsDisplay = <p className='text-left'>{this.props.numHits} items</p>;
     }
 
 		return (
