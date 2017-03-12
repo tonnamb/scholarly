@@ -1,9 +1,15 @@
 import * as types from '../actions/types';
+import Bayes from 'bayes';
 
-const classifier = (state = {}, action) => {
+const defaultClassifier = Bayes();
+defaultClassifier.learn('', '__unknown__')
+
+const classifier = (state = defaultClassifier, action) => {
   switch (action.type) {
     case types.TRAIN_CLASSIFIER:
-      return state;
+      const stateJson = state.toJson();
+      const newState = Bayes.fromJson(stateJson).learn(action.text, action.category);
+      return newState;
     default:
       return state;
   }

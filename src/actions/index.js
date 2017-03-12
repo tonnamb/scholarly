@@ -12,18 +12,25 @@ export function fetchResults(query) {
 	};
 }
 
-export function fetchMoreResults(query, page) {
-	const url = `${ROOT_URL}?query=${query}&rows=10&offset=${10*(page-1)}`;
-	const request = axios.get(url);
+export function trainClassifier(text, category) {
 	return {
-		type: types.FETCH_MORE_RESULTS,
-		payload: request
+		type: types.TRAIN_CLASSIFIER,
+		text,
+		category
 	};
 }
 
-export function trainClassifier(data) {
+export function applyMode() {
 	return {
-		type: types.TRAIN_CLASSIFIER,
-		data
+		type: types.APPLY_MODE
 	};
+}
+
+export function applyFetch(query) {
+	const applyUrl = `${ROOT_URL}?query=${query}&rows=100`;
+	const applyrequest = axios.get(applyUrl);
+	return {
+		type: types.APPLY_FETCH,
+		payload: applyrequest
+	}
 }

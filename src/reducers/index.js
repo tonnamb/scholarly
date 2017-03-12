@@ -1,14 +1,18 @@
 import { combineReducers } from 'redux';
-import classifer from './classifier';
+import classifier from './classifier';
 import hits from './hits';
 import numHits from './num_hits';
 import query from './query';
+import mode from './mode';
+import applyHits from './apply_hits';
 
 const Reducer = combineReducers({
-  classifer,
+  classifier,
   hits,
   numHits,
-  query
+  query,
+  mode,
+  applyHits
 });
 
 export default Reducer;

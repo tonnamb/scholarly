@@ -1,12 +1,23 @@
 .search-box {
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
+.apply-entity,
 .search-entity {
   margin-bottom: 20px;
 }
 
+.apply-entity p,
 .search-entity p {
   margin: 0;
+}
+
+.search-entity .input-group {
+  margin-top: 5px;
+  width: 320px;
+}
+
+.apply-button {
+  width: 172.52px;
 }

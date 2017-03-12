@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import TrainButton from './TrainButton';
 
-class SearchResults extends Component {
+class ApplyResults extends Component {
   constructor(props) {
     super(props);
     this.renderEntity = this.renderEntity.bind(this);
@@ -19,33 +18,28 @@ class SearchResults extends Component {
     const author=(data.author ? data.author.map(this.parseAuthor) : ['']);
     const journal=data['container-title'][0];
     const publisher=data.publisher;
+    const classification=this.props.classifier.categorize(title);
     return (
-      <div className='search-entity' key={url}>
+      <div className='apply-entity' key={url}>
         <a href={url}>{title}</a>
         <p>{author.join(', ')}</p>
         <p>{journal}, {year} - {publisher}</p>
-        <TrainButton textTrain={title}/>
+        <p>Classified as: {classification}</p>
       </div>
     );
   }
 
 	render() {
-    let numHitsDisplay;
-    if (this.props.numHits) {
-      numHitsDisplay = <p className='text-right'>{this.props.numHits} results</p>;
-    }
-
 		return (
-			<div className='search-results'>
-        {numHitsDisplay}
-        {this.props.hits.map(this.renderEntity)}
+			<div className='apply-results'>
+        {this.props.applyHits.map(this.renderEntity)}
       </div>
 		);
 	}
 }
 
-function mapStateToProps({ hits, numHits }) {
-	return { hits, numHits };
+function mapStateToProps({ applyHits, classifier }) {
+	return { applyHits, classifier };
 }
 
-export default connect(mapStateToProps)(SearchResults);
+export default connect(mapStateToProps)(ApplyResults);

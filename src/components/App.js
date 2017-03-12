@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import SearchBox from '../containers/SearchBox';
-import SearchResults from '../containers/SearchResults';
+import SearchDisplay from '../containers/SearchDisplay';
+import ApplyDisplay from '../containers/ApplyDisplay';
 
 class App extends Component {
 	render() {
@@ -13,8 +13,8 @@ class App extends Component {
 				</div>
 				<div className="row">
 					<div className="col-xs-12 col-md-8 col-md-offset-2">
-						<SearchBox />
-						<SearchResults />
+						<SearchDisplay />
+						<ApplyDisplay />
 					</div>
 				</div>
 			</div>
