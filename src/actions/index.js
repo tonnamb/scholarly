@@ -1,7 +1,7 @@
 import * as types from './types';
 import axios from 'axios';
 
-const ROOT_URL = "http://api.crossref.org/works";
+const ROOT_URL = "https://api.crossref.org/works";
 
 export function fetchResults(query) {
 	const url = `${ROOT_URL}?query=${query}&rows=10`;
