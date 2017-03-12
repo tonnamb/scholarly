@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { selectCategory } from '../actions';
+import entries from 'object.entries';
+
+if (!Object.entries) {
+    entries.shim();
+}
 
 class ApplyCategories extends Component {
   constructor(props) {
