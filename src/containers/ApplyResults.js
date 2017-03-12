@@ -7,7 +7,7 @@ class ApplyResults extends Component {
   constructor(props) {
     super(props);
     this.renderEntity = this.renderEntity.bind(this);
-    this.dispatchStoreClass = this.dispatchStoreClass.bind(this);
+    this.filterFunction = this.filterFunction.bind(this);
   }
 
   parseAuthor(author) {
@@ -21,7 +21,7 @@ class ApplyResults extends Component {
     const author=(data.author ? data.author.map(this.parseAuthor) : ['']);
     const journal=data['container-title'][0];
     const publisher=data.publisher;
-    const classification=this.props.classifier.categorize(title);
+    const classification=data.classification;
     return (
       <div className='apply-entity' key={url}>
         <a href={url}>{title}</a>
@@ -32,27 +32,26 @@ class ApplyResults extends Component {
     );
   }
 
-  dispatchStoreClass(data) {
-    const applyTitle=(data.title[0] ? data.title[0] : '__title_not_present__');
-    const applyClassification=this.props.classifier.categorize(applyTitle);
-    this.props.storeClass(data, applyClassification);
-  }
-
-  componentDidUpdate() {
-    this.props.applyHits.map(this.dispatchStoreClass);
+  filterFunction(item) {
+    if (this.props.displayFilter === 'all') {
+      return true;
+    } else {
+      return item.classification === this.props.displayFilter;
+    }
   }
 
 	render() {
+    const filteredClassified = this.props.classified.filter(this.filterFunction);
 		return (
 			<div className='apply-results'>
-        {this.props.applyHits.map(this.renderEntity)}
+        {filteredClassified.map(this.renderEntity)}
       </div>
 		);
 	}
 }
 
-function mapStateToProps({ applyHits, classifier }) {
-	return { applyHits, classifier };
+function mapStateToProps({ classified, displayFilter }) {
+	return { classified, displayFilter };
 }
 
 const mapDispatchToProps = (dispatch) => {

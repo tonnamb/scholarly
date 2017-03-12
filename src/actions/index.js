@@ -26,18 +26,27 @@ export function applyMode() {
 	};
 }
 
-export function applyFetch(query) {
-	const applyUrl = `${ROOT_URL}?query=${query}&rows=100`;
-	const applyrequest = axios.get(applyUrl);
-	return {
-		type: types.APPLY_FETCH,
-		payload: applyrequest
+export function fetchResultsThunk(query) {
+	return (dispatch, getState) => {
+		const applyUrl = `${ROOT_URL}?query=${query}&rows=100`;
+		const { classifier } = getState();
+		return axios.get(applyUrl).then(
+			response => dispatch(classifyResults(response, classifier))
+		);
 	}
 }
 
-export function storeClass(obj, classification) {
+export function classifyResults(data, classifier) {
 	return {
-		type: types.APPLY_STORE,
-		data: { ...obj, classification }
-	}
+		type: types.CLASSIFY_RESULTS,
+		payload: data,
+		classifier
+	};
+}
+
+export function selectCategory(category) {
+	return {
+		type: types.DISPLAY_CATEGORY,
+		category
+	};
 }

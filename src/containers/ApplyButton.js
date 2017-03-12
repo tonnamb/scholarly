@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { applyMode, applyFetch } from '../actions';
+import { applyMode, applyFetch, fetchResultsThunk } from '../actions';
 
 class ApplyButton extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class ApplyButton extends Component {
 
   handleClick() {
     this.props.applyMode();
-    this.props.applyFetch(this.props.query);
+    this.props.fetchResultsThunk(this.props.query);
   }
 
   render() {
@@ -34,7 +34,7 @@ function mapStateToProps({ numHits, query }) {
 }
 
 const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators({ applyMode, applyFetch }, dispatch);
+	return bindActionCreators({ applyMode, applyFetch, fetchResultsThunk }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplyButton);
