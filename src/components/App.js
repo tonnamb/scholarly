@@ -8,7 +8,7 @@ class App extends Component {
 			<div className="container">
 				<div className="row">
 					<div className="col-xs-12 col-md-8 col-md-offset-2">
-						<h3>Scholarly: Enhanced literature search with machine learning</h3>
+						<h3>Scholarly: Classify search results with models you train yourself</h3>
 					</div>
 				</div>
 				<SearchDisplay />
