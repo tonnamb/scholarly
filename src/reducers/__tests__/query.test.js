@@ -9,7 +9,7 @@ it('handles action with unknown type', () => {
   )
 })
 
-it('keeps track of search query', () => {
+it('FETCH_RESULTS: keeps track of search query', () => {
   const mockPayload = {
     'data': {
       'message': {

@@ -9,7 +9,7 @@ it('handles action with unknown type', () => {
   )
 })
 
-it('keeps track of array of search hit objects', () => {
+it('FETCH_RESULTS: keeps track of array of search hit objects', () => {
   const mockPayload = {
     'data': {
       'message': {
@@ -32,7 +32,7 @@ it('keeps track of array of search hit objects', () => {
   )
 })
 
-it('overwrite previous array of search hit objects', () => {
+it('FETCH_RESULTS: overwrite previous array of search hit objects', () => {
   const mockPayload = {
     'data': {
       'message': {
