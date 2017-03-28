@@ -11,9 +11,9 @@ it('handles action with unknown type', () => {
 
 it('keeps track of number of search hits', () => {
   const mockPayload = {
-    "data": {
-      "message": {
-        "total-results": 156683
+    'data': {
+      'message': {
+        'total-results': 156683
       }
     }
   }
