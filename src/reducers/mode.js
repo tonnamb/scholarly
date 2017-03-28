@@ -1,12 +1,12 @@
-import * as types from '../actions/types';
+import * as types from '../actions/types'
 
 const mode = (state = 'search', action) => {
   switch (action.type) {
     case types.APPLY_MODE:
-      return 'apply';
+      return 'apply'
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default mode;
+export default mode
