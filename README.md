@@ -2,9 +2,9 @@
 
 How it works:
 
-1. Search
-2. Categorize some items to train Naive Bayes classifer
-3. Apply the classifier to the other items
+1. Enter search query to search [Crossref](http://search.crossref.org/) database
+2. Enter category for items to train your model. Try 'useful'
+3. Click 'Apply machine learning' to see classification results
 
 Made with:
 * JavaScript
@@ -19,6 +19,7 @@ Made with:
 Commands:
 * Start server: `npm start`
 * Run tests: `npm test`
+* Deploy to GitHub Pages: `npm run deploy`
 
 To-do:
 
