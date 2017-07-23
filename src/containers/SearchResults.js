@@ -18,11 +18,13 @@ class SearchResults extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const startIndex = (this.state.pageNumber - 1) * this.entityPerPage;
+    const stopIndex = this.state.pageNumber * this.entityPerPage;
     this.setState({
-      data: nextProps.hits.slice(0, this.entityPerPage),
+      data: nextProps.hits.slice(startIndex, stopIndex),
       pageCount: Math.ceil(nextProps.hits.length / this.entityPerPage),
-      disableButtonArray: nextProps.disableButtonReducer.slice(0, this.entityPerPage),
-      trainedCategoryArray: nextProps.trainedCategoryReducer.slice(0, this.entityPerPage)
+      disableButtonArray: nextProps.disableButtonReducer.slice(startIndex, stopIndex),
+      trainedCategoryArray: nextProps.trainedCategoryReducer.slice(startIndex, stopIndex)
     });
   }
 
