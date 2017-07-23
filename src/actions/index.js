@@ -50,3 +50,10 @@ export function selectCategory(category) {
 		category
 	};
 }
+
+export function disableTrainButton(index) {
+	return {
+		type: types.DISABLE_TRAIN_BUTTON,
+		index
+	};
+}

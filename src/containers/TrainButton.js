@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { trainClassifier } from '../actions';
+import { trainClassifier, disableTrainButton } from '../actions';
 
 class TrainButton extends Component {
   constructor(props) {
@@ -20,8 +20,17 @@ class TrainButton extends Component {
 	onFormSubmit(event) {
 		event.preventDefault();
 		this.props.trainClassifier(this.props.textTrain, this.state.category);
+		this.props.disableTrainButton(this.props.indexDisableButton);
     this.refs.btn.setAttribute('disabled', 'disabled');
 		this.refs.inp.setAttribute('disabled', 'disabled');
+	}
+
+	componentDidMount() {
+		if (this.props.disableButton) {
+			this.refs.btn.setAttribute('disabled', 'disabled');
+			this.refs.inp.setAttribute('disabled', 'disabled');
+			this.setState({ category: 'Model has been trained' });
+		}
 	}
 
   render() {
@@ -45,7 +54,7 @@ class TrainButton extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators({ trainClassifier }, dispatch);
+	return bindActionCreators({ trainClassifier, disableTrainButton }, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(TrainButton);

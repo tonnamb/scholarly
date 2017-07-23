@@ -9,7 +9,8 @@ class SearchResults extends Component {
     this.renderEntity = this.renderEntity.bind(this);
     this.state = {
       data: [],
-      pageCount: 0
+      pageCount: 0,
+      disableButtonArray: []
     }
     this.entityPerPage = 10;
   }
@@ -17,7 +18,8 @@ class SearchResults extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       data: nextProps.hits.slice(0, this.entityPerPage),
-      pageCount: Math.ceil(nextProps.hits.length / this.entityPerPage)
+      pageCount: Math.ceil(nextProps.hits.length / this.entityPerPage),
+      disableButtonArray: nextProps.disableButtonReducer.slice(0, this.entityPerPage)
     });
   }
 
@@ -25,7 +27,7 @@ class SearchResults extends Component {
     return `${author.given} ${author.family}`;
   }
 
-  renderEntity(data) {
+  renderEntity(data, index) {
     const title=(data.title[0] ? data.title[0] : '__title_not_present__');
     const url=data.URL;
     const year=data.created['date-parts'][0][0];
@@ -37,7 +39,7 @@ class SearchResults extends Component {
         <a href={url}>{title}</a>
         <p>{author.join(', ')}</p>
         <p>{journal}, {year} - {publisher}</p>
-        <TrainButton textTrain={title}/>
+        <TrainButton textTrain={title} disableButton={this.state.disableButtonArray[index]} indexDisableButton={index}/>
       </div>
     );
   }
@@ -46,7 +48,8 @@ class SearchResults extends Component {
     let selected = data.selected;
     let offset = Math.ceil(selected * this.entityPerPage);
     this.setState({
-      data: this.props.hits.slice(offset, offset + 10)
+      data: this.props.hits.slice(offset, offset + 10),
+      disableButtonArray: this.props.disableButtonReducer.slice(offset, offset + 10)
     });
   }
 
@@ -81,8 +84,8 @@ class SearchResults extends Component {
 	}
 }
 
-function mapStateToProps({ hits, numHits }) {
-	return { hits, numHits };
+function mapStateToProps({ hits, numHits, disableButtonReducer }) {
+	return { hits, numHits, disableButtonReducer };
 }
 
 export default connect(mapStateToProps)(SearchResults);
