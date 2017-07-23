@@ -21,3 +21,8 @@
 .apply-button {
   width: 172.52px;
 }
+
+.break-me {
+  pointer-events: none;
+  cursor: default;
+}

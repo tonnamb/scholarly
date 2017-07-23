@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TrainButton from './TrainButton';
+import ReactPaginate from 'react-paginate';
 
 class SearchResults extends Component {
   constructor(props) {
     super(props);
     this.renderEntity = this.renderEntity.bind(this);
+    this.state = {
+      data: [],
+      pageCount: 0
+    }
+    this.entityPerPage = 10;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      data: nextProps.hits.slice(0, this.entityPerPage),
+      pageCount: Math.ceil(nextProps.hits.length / this.entityPerPage)
+    });
   }
 
   parseAuthor(author) {
@@ -29,16 +42,40 @@ class SearchResults extends Component {
     );
   }
 
+  handlePageClick = (data) => {
+    let selected = data.selected;
+    let offset = Math.ceil(selected * this.entityPerPage);
+    this.setState({
+      data: this.props.hits.slice(offset, offset + 10)
+    });
+  }
+
 	render() {
     let numHitsDisplay;
     if (this.props.numHits) {
       numHitsDisplay = <p className='text-left'>{this.props.numHits} items</p>;
     }
 
+    let paginateDisplay;
+    if (this.state.pageCount > 0) {
+      paginateDisplay = <ReactPaginate previousLabel={"previous"}
+                                       nextLabel={"next"}
+                                       breakLabel={<a href="">...</a>}
+                                       breakClassName={"break-me"}
+                                       pageCount={this.state.pageCount}
+                                       marginPagesDisplayed={2}
+                                       pageRangeDisplayed={5}
+                                       onPageChange={this.handlePageClick}
+                                       containerClassName={"pagination"}
+                                       subContainerClassName={"pages-pagination"}
+                                       activeClassName={"active"} />;
+    }
+
 		return (
 			<div className='search-results'>
         {numHitsDisplay}
-        {this.props.hits.map(this.renderEntity)}
+        {this.state.data.map(this.renderEntity)}
+        {paginateDisplay}
       </div>
 		);
 	}

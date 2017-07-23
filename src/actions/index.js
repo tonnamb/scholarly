@@ -4,7 +4,7 @@ import axios from 'axios';
 const ROOT_URL = "https://api.crossref.org/works";
 
 export function fetchResults(query) {
-	const url = `${ROOT_URL}?query=${query}&rows=10`;
+	const url = `${ROOT_URL}?query=${query}&rows=100`;
 	const request = axios.get(url);
 	return {
 		type: types.FETCH_RESULTS,
