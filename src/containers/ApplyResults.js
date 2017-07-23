@@ -2,12 +2,28 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { storeClass } from '../actions';
+import ReactPaginate from 'react-paginate';
 
 class ApplyResults extends Component {
   constructor(props) {
     super(props);
     this.renderEntity = this.renderEntity.bind(this);
     this.filterFunction = this.filterFunction.bind(this);
+    this.state = {
+      data: [],
+      pageCount: 0,
+      pageNumber: 1
+    }
+    this.entityPerPage = 10;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const filteredClassified = nextProps.classified.filter(this.filterFunction(nextProps.displayFilter));
+  
+    this.setState({
+      data: filteredClassified.slice(0, this.entityPerPage),
+      pageCount: Math.ceil(filteredClassified.length / this.entityPerPage)
+    });
   }
 
   parseAuthor(author) {
@@ -32,19 +48,47 @@ class ApplyResults extends Component {
     );
   }
 
-  filterFunction(item) {
-    if (this.props.displayFilter === 'all') {
-      return true;
-    } else {
-      return item.classification === this.props.displayFilter;
+  filterFunction(displayFilter) {
+    return (item) => {
+        if (displayFilter === 'all') {
+        return true;
+      } else {
+        return item.classification === displayFilter;
+      }
     }
   }
 
+  handlePageClick = (data) => {
+    let selected = data.selected;
+    let offset = Math.ceil(selected * this.entityPerPage);
+    const filteredClassified = this.props.classified.filter(this.filterFunction(this.props.displayFilter));
+
+    this.setState({
+      data: filteredClassified.slice(offset, offset + this.entityPerPage),
+      pageNumber: selected + 1
+    });
+  }
+
 	render() {
-    const filteredClassified = this.props.classified.filter(this.filterFunction);
+    let paginateDisplay;
+    if (this.state.pageCount > 1) {
+      paginateDisplay = <ReactPaginate previousLabel={"previous"}
+                                       nextLabel={"next"}
+                                       breakLabel={<a href="">...</a>}
+                                       breakClassName={"break-me"}
+                                       pageCount={this.state.pageCount}
+                                       marginPagesDisplayed={2}
+                                       pageRangeDisplayed={5}
+                                       onPageChange={this.handlePageClick}
+                                       containerClassName={"pagination"}
+                                       subContainerClassName={"pages-pagination"}
+                                       activeClassName={"active"} />;
+    }
+
 		return (
 			<div className='apply-results'>
-        {filteredClassified.map(this.renderEntity)}
+        {this.state.data.map(this.renderEntity)}
+        {paginateDisplay}
       </div>
 		);
 	}

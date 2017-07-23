@@ -57,9 +57,9 @@ class SearchResults extends Component {
     let selected = data.selected;
     let offset = Math.ceil(selected * this.entityPerPage);
     this.setState({
-      data: this.props.hits.slice(offset, offset + 10),
-      disableButtonArray: this.props.disableButtonReducer.slice(offset, offset + 10),
-      trainedCategoryArray: this.props.trainedCategoryReducer.slice(offset, offset + 10),
+      data: this.props.hits.slice(offset, offset + this.entityPerPage),
+      disableButtonArray: this.props.disableButtonReducer.slice(offset, offset + this.entityPerPage),
+      trainedCategoryArray: this.props.trainedCategoryReducer.slice(offset, offset + this.entityPerPage),
       pageNumber: selected + 1
     });
   }
@@ -71,7 +71,7 @@ class SearchResults extends Component {
     }
 
     let paginateDisplay;
-    if (this.state.pageCount > 0) {
+    if (this.state.pageCount > 1) {
       paginateDisplay = <ReactPaginate previousLabel={"previous"}
                                        nextLabel={"next"}
                                        breakLabel={<a href="">...</a>}
