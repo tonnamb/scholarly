@@ -12,11 +12,12 @@ export function fetchResults(query) {
 	};
 }
 
-export function trainClassifier(text, category) {
+export function trainClassifier(text, category, index) {
 	return {
 		type: types.TRAIN_CLASSIFIER,
 		text,
-		category
+		category,
+		index
 	};
 }
 

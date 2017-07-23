@@ -19,8 +19,8 @@ class TrainButton extends Component {
 
 	onFormSubmit(event) {
 		event.preventDefault();
-		this.props.trainClassifier(this.props.textTrain, this.state.category);
-		this.props.disableTrainButton(this.props.indexDisableButton);
+		this.props.trainClassifier(this.props.textTrain, this.state.category, this.props.indexOfEntity);
+		this.props.disableTrainButton(this.props.indexOfEntity);
     this.refs.btn.setAttribute('disabled', 'disabled');
 		this.refs.inp.setAttribute('disabled', 'disabled');
 	}
@@ -29,7 +29,7 @@ class TrainButton extends Component {
 		if (this.props.disableButton) {
 			this.refs.btn.setAttribute('disabled', 'disabled');
 			this.refs.inp.setAttribute('disabled', 'disabled');
-			this.setState({ category: 'Model has been trained' });
+			this.setState({ category: this.props.trainedCategory });
 		}
 	}
 

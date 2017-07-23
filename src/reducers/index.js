@@ -7,6 +7,7 @@ import mode from './mode'
 import classified from './classified'
 import displayFilter from './display_filter'
 import disableButtonReducer from './disable_button'
+import trainedCategoryReducer from './trained_category'
 
 const Reducer = combineReducers({
   classifier,
@@ -16,7 +17,8 @@ const Reducer = combineReducers({
   mode,
   classified,
   displayFilter,
-  disableButtonReducer
+  disableButtonReducer,
+  trainedCategoryReducer
 })
 
 export default Reducer

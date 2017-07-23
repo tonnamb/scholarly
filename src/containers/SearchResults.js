@@ -10,7 +10,9 @@ class SearchResults extends Component {
     this.state = {
       data: [],
       pageCount: 0,
-      disableButtonArray: []
+      disableButtonArray: [],
+      trainedCategoryArray: [],
+      pageNumber: 1
     }
     this.entityPerPage = 10;
   }
@@ -19,7 +21,8 @@ class SearchResults extends Component {
     this.setState({
       data: nextProps.hits.slice(0, this.entityPerPage),
       pageCount: Math.ceil(nextProps.hits.length / this.entityPerPage),
-      disableButtonArray: nextProps.disableButtonReducer.slice(0, this.entityPerPage)
+      disableButtonArray: nextProps.disableButtonReducer.slice(0, this.entityPerPage),
+      trainedCategoryArray: nextProps.trainedCategoryReducer.slice(0, this.entityPerPage)
     });
   }
 
@@ -34,12 +37,16 @@ class SearchResults extends Component {
     const author=(data.author ? data.author.map(this.parseAuthor) : ['']);
     const journal=data['container-title'][0];
     const publisher=data.publisher;
+    const adjustedIndex = index + (this.state.pageNumber - 1) * this.entityPerPage;
     return (
       <div className='search-entity' key={url}>
         <a href={url}>{title}</a>
         <p>{author.join(', ')}</p>
         <p>{journal}, {year} - {publisher}</p>
-        <TrainButton textTrain={title} disableButton={this.state.disableButtonArray[index]} indexDisableButton={index}/>
+        <TrainButton textTrain={title} 
+                     disableButton={this.state.disableButtonArray[index]} 
+                     indexOfEntity={adjustedIndex}
+                     trainedCategory={this.state.trainedCategoryArray[index]} />
       </div>
     );
   }
@@ -49,7 +56,9 @@ class SearchResults extends Component {
     let offset = Math.ceil(selected * this.entityPerPage);
     this.setState({
       data: this.props.hits.slice(offset, offset + 10),
-      disableButtonArray: this.props.disableButtonReducer.slice(offset, offset + 10)
+      disableButtonArray: this.props.disableButtonReducer.slice(offset, offset + 10),
+      trainedCategoryArray: this.props.trainedCategoryReducer.slice(offset, offset + 10),
+      pageNumber: selected + 1
     });
   }
 
@@ -84,8 +93,8 @@ class SearchResults extends Component {
 	}
 }
 
-function mapStateToProps({ hits, numHits, disableButtonReducer }) {
-	return { hits, numHits, disableButtonReducer };
+function mapStateToProps({ hits, numHits, disableButtonReducer, trainedCategoryReducer }) {
+	return { hits, numHits, disableButtonReducer, trainedCategoryReducer };
 }
 
 export default connect(mapStateToProps)(SearchResults);
