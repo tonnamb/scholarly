@@ -1,7 +1,7 @@
 import * as types from '../actions/types'
 
 export function classifyItem (data, classifier) {
-  const title = (data.title[0] ? data.title[0] : '__title_not_present__')
+  const title = ((data.title && data.title[0]) ? data.title[0] : '__title_not_present__')
   return classifier.categorize(title)
 }
 
