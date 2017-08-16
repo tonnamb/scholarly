@@ -31,11 +31,11 @@ class ApplyResults extends Component {
   }
 
   renderEntity(data) {
-    const title=(data.title[0] ? data.title[0] : '__title_not_present__');
+    const title=((data.title && data.title[0]) ? data.title[0] : '__title_not_present__');
     const url=data.URL;
     const year=data.created['date-parts'][0][0];
     const author=(data.author ? data.author.map(this.parseAuthor) : ['']);
-    const journal=data['container-title'][0];
+    const journal=((data['container-title'] && data['container-title'][0]) ? data['container-title'][0] : '__journal_not_present__');
     const publisher=data.publisher;
     const classification=data.classification;
     return (
